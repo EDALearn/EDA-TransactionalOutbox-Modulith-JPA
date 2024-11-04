@@ -1,0 +1,26 @@
+{
+  "id": 2,
+  "version": 1,
+  "email": "jane.smith@example.com",
+  "name": "Jane Smith",
+  "addresses": [
+    {
+      "city": "Othertown",
+      "street": "456 Elm St"
+    }
+  ],
+  "paymentMethods": [
+    {
+      "type": 0,
+      "cardNumber": "6543210987654321",
+      "createdBy": "system",
+      "createdDate": "2023-01-01T00:00:00",
+      "lastModifiedBy": "system",
+      "lastModifiedDate": "2023-01-01T00:00:00"
+    }
+  ],
+  "createdBy": "system",
+  "createdDate": "2023-01-01T00:00:00",
+  "lastModifiedBy": "system",
+  "lastModifiedDate": "2023-01-01T00:00:00"
+}

@@ -1,0 +1,291 @@
+openapi: 3.0.1
+info:
+  title: "ZenWave Customer JPA Example"
+  version: 0.0.1
+  description: "ZenWave Customer JPA Example"
+  contact:
+    email: email@domain.com
+servers:
+  - description: localhost
+    url: http://localhost:8080/api
+  - description: custom
+    url: "{protocol}://{server}/{path}"
+    variables:
+      protocol:
+        enum: ['http', 'https']
+        default: 'http'
+      server:
+        default: 'localhost:8080'
+      path:
+        default: 'api'
+tags:
+  - name: "Default"
+  - name: "Customer"
+
+
+paths:
+  /customers:
+    post:
+      operationId: createCustomer
+      description: "createCustomer"
+      tags: [Customer]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Customer"
+      responses:
+        "201":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+  /customers/{id}:
+    get:
+      operationId: getCustomer
+      description: "getCustomer"
+      tags: [Customer]
+      parameters:
+        - name: "id"
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+    put:
+      operationId: updateCustomer
+      description: "updateCustomer"
+      tags: [Customer]
+      parameters:
+        - name: "id"
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Customer"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+    delete:
+      operationId: deleteCustomer
+      description: "deleteCustomer"
+      tags: [Customer]
+      parameters:
+        - name: "id"
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "204":
+          description: "OK"
+  /customers/search:
+    post:
+      operationId: searchCustomers
+      description: "searchCustomers"
+      tags: [Customer]
+      parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/sort"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomerSearchCriteria"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerPaginated"
+
+components:
+  schemas:
+    Customer:
+      type: "object"
+      x-business-entity: "Customer"
+      required:
+      - "name"
+      - "email"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        version:
+          type: "integer"
+        name:
+          type: "string"
+          maxLength: 254
+          description: "Customer name"
+        email:
+          type: "string"
+          maxLength: 254
+          pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}"
+          description: ""
+        addresses:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/Address"
+            minLength: 1
+            maxLength: 5
+        paymentMethods:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/PaymentMethod"
+    CustomerPaginated:
+      allOf:
+      - $ref: "#/components/schemas/Page"
+      - x-business-entity-paginated: "Customer"
+      - properties:
+          content:
+            type: "array"
+            items:
+              $ref: "#/components/schemas/Customer"
+    CustomerSearchCriteria:
+      type: "object"
+      x-business-entity: "CustomerSearchCriteria"
+      properties:
+        name:
+          type: "string"
+        email:
+          type: "string"
+        city:
+          type: "string"
+        state:
+          type: "string"
+    PaymentMethodType:
+      type: "string"
+      x-business-entity: "PaymentMethodType"
+      enum:
+      - "VISA"
+      - "MASTERCARD"
+    Address:
+      type: "object"
+      x-business-entity: "Address"
+      required:
+      - "street"
+      - "city"
+      properties:
+        street:
+          type: "string"
+          maxLength: 254
+        city:
+          type: "string"
+          maxLength: 254
+    PaymentMethod:
+      type: "object"
+      x-business-entity: "PaymentMethod"
+      required:
+      - "type"
+      - "cardNumber"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        version:
+          type: "integer"
+        type:
+          $ref: "#/components/schemas/PaymentMethodType"
+        cardNumber:
+          type: "string"
+
+    Page:
+      type: object
+      required:
+        - "content"
+        - "totalElements"
+        - "totalPages"
+        - "size"
+        - "number"
+      properties:
+        number:
+          type: integer
+          minimum: 0
+        numberOfElements:
+          type: integer
+          minimum: 0
+        size:
+          type: integer
+          minimum: 0
+          maximum: 200
+          multipleOf: 25
+        totalElements:
+          type: integer
+        totalPages:
+          type: integer
+
+  parameters:
+    page:
+      name: page
+      in: query
+      description: The number of results page
+      schema:
+        type: integer
+        format: int32
+        default: 0
+    limit:
+      name: limit
+      in: query
+      description: The number of results in a single page
+      schema:
+        type: integer
+        format: int32
+        default: 20
+    sort:
+      name: sort
+      in: query
+      description: The number of results page
+      schema:
+        type: array
+        items:
+          type: string
+
+  securitySchemes:
+    basicAuth:     # <-- arbitrary name for the security scheme
+      type: http
+      scheme: basic
+    bearerAuth:     # <-- arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT    # optional, arbitrary value for documentation purposes
+    openIdConnect:
+      type: openIdConnect
+      openIdConnectUrl: /.well-known/openid-configuration
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: /oauth2/authorize
+          tokenUrl: /oauth2/token
+          scopes:
+            read: Grants read access
+            write: Grants write access
+            admin: Grants access to admin operations
+security:
+  - basicAuth: []  # <-- use the same name here
+  - bearerAuth: []  # <-- use the same name here
+  - openIdConnect: []  # <-- use the same name here
+  - oauth2: [read, write]  # <-- use the same name here

@@ -1,0 +1,110 @@
+asyncapi: 3.0.0
+info:
+  title: ""
+  version: 0.0.1
+  tags:
+    - name: "Default"
+    - name: "Customer"
+
+defaultContentType: application/json
+
+channels:
+  CustomersChannel:
+    address: "customers"
+    messages:
+      CustomerEventMessage:
+        $ref: '#/components/messages/CustomerEventMessage'
+
+operations:
+  onCustomerEvent:
+    action: send
+    tags:
+      - name: Customer
+    channel:
+      $ref: '#/channels/CustomersChannel'
+
+
+components:
+  messages:
+    CustomerEventMessage:
+      name: CustomerEventMessage
+      title: ""
+      summary: ""
+      traits:
+        - $ref: '#/components/messageTraits/CommonHeaders'
+      payload:
+        $ref: "#/components/schemas/CustomerEvent"
+
+  messageTraits:
+    CommonHeaders:
+      headers:
+        type: object
+        properties:
+
+  schemas:
+    CustomerEvent:
+      type: "object"
+      x-business-entity: "CustomerEvent"
+      required:
+      - "name"
+      - "email"
+      properties:
+        name:
+          type: "string"
+          maxLength: 254
+          description: "Customer name"
+        email:
+          type: "string"
+          maxLength: 254
+          pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}"
+          description: ""
+        addresses:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/Address"
+            minLength: 1
+            maxLength: 5
+        id:
+          type: "integer"
+          format: "int64"
+        version:
+          type: "integer"
+          format: "int32"
+        paymentMethods:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/PaymentMethod"
+    PaymentMethodType:
+      type: "string"
+      x-business-entity: "PaymentMethodType"
+      enum:
+      - "VISA"
+      - "MASTERCARD"
+    Address:
+      type: "object"
+      x-business-entity: "Address"
+      required:
+      - "street"
+      - "city"
+      properties:
+        street:
+          type: "string"
+          maxLength: 254
+        city:
+          type: "string"
+          maxLength: 254
+    PaymentMethod:
+      type: "object"
+      x-business-entity: "PaymentMethod"
+      required:
+      - "type"
+      - "cardNumber"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        type:
+          $ref: "#/components/schemas/PaymentMethodType"
+        cardNumber:
+          type: "string"
+

@@ -1,0 +1,26 @@
+{
+  "id": 1,
+  "version": 1,
+  "email": "john.doe@example.com",
+  "name": "John Doe",
+  "addresses": [
+    {
+      "city": "Anytown",
+      "street": "123 Main St"
+    }
+  ],
+  "paymentMethods": [
+    {
+      "type": 1,
+      "cardNumber": "1234567890123456",
+      "createdBy": "system",
+      "createdDate": "2023-01-01T00:00:00",
+      "lastModifiedBy": "system",
+      "lastModifiedDate": "2023-01-01T00:00:00"
+    }
+  ],
+  "createdBy": "system",
+  "createdDate": "2023-01-01T00:00:00",
+  "lastModifiedBy": "system",
+  "lastModifiedDate": "2023-01-01T00:00:00"
+}

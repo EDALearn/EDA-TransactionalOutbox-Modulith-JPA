@@ -1,0 +1,67 @@
+config {
+    title "ZenWave Customer JPA Example"
+    basePackage "io.zenwave360.example"
+    persistence jpa
+    databaseType postgresql
+
+
+    specFile "zenwave-model.zdl"
+    zdlFile "zenwave-model.zdl"
+
+
+    // these should match the values of openapi-generator-maven-plugin
+    // used by the OpenAPIControllersPlugin and SpringWebTestClientPlugin
+    openApiApiPackage "{{basePackage}}.adapters.web"
+    openApiModelPackage "{{basePackage}}.adapters.web.model"
+    openApiModelNameSuffix DTO
+
+
+    plugins {
+
+        ZDLToOpenAPIPlugin {
+            idType integer
+            idTypeFormat int64
+            targetFile "src/main/resources/public/apis/openapi.yml"
+        }
+
+        ZDLToAsyncAPIPlugin {
+            asyncapiVersion v3
+            idType integer
+            idTypeFormat int64
+            targetFile "src/main/resources/public/apis/asyncapi.yml"
+            // includeKafkaCommonHeaders true
+        }
+
+        BackendApplicationDefaultPlugin {
+            useLombok true
+            includeEmitEventsImplementation true
+            // --force // overwite all files
+        }
+
+        OpenAPIControllersPlugin {
+            openapiFile "src/main/resources/public/apis/openapi.yml"
+        }
+
+        SpringWebTestClientPlugin {
+            openapiFile "src/main/resources/public/apis/openapi.yml"
+        }
+
+        SpringWebTestClientPlugin {
+            openapiFile "src/main/resources/public/apis/openapi.yml"
+            groupBy businessFlow
+            businessFlowTestName CreateUpdateDeleteCustomerIntegrationTest
+            operationIds createCustomer,updateCustomer,deleteCustomer,getCustomer
+        }
+
+        OpenAPIKaratePlugin {
+            openapiFile "src/main/resources/public/apis/openapi.yml"
+        }
+
+        OpenAPIKaratePlugin {
+            openapiFile "src/main/resources/public/apis/openapi.yml"
+            groupBy businessFlow
+            businessFlowTestName CreateUpdateDeleteCustomerKarateTest
+            operationIds createCustomer,updateCustomer,deleteCustomer,getCustomer
+        }
+    }
+}
