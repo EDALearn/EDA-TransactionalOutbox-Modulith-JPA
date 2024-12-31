@@ -69,7 +69,7 @@ class CustomerApiControllerTest {
         Optional<List<String>> sort = Optional.of(List.of("name"));
         CustomerSearchCriteriaDTO reqBody = new CustomerSearchCriteriaDTO();
         var response = controller.searchCustomers(reqBody, page, limit, sort);
-        Assertions.assertEquals(201, response.getStatusCode().value());
+        Assertions.assertEquals(200, response.getStatusCode().value());
     }
 
 }

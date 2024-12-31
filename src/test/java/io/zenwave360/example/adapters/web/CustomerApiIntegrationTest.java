@@ -159,7 +159,7 @@ class CustomerApiIntegrationTest extends BaseWebTestClientTest {
     * Test: searchCustomers for OK.
     */
     @Test
-    void testSearchCustomers_201() {
+    void testSearchCustomers_200() {
         CustomerSearchCriteriaDTO requestBody = new CustomerSearchCriteriaDTO();
         requestBody.setName("Jane Doe");
         requestBody.setEmail("jane.doe@example.com");
@@ -174,7 +174,7 @@ class CustomerApiIntegrationTest extends BaseWebTestClientTest {
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(requestBody)
             .exchange()
-            .expectStatus().isEqualTo(201)
+            .expectStatus().isEqualTo(200)
             .expectHeader().contentType(MediaType.APPLICATION_JSON)
             .expectBody()
             .jsonPath("$.totalPages").isNotEmpty()

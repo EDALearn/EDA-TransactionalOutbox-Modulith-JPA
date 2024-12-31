@@ -19,6 +19,6 @@ public interface EventsMapper {
     io.zenwave360.example.core.outbound.events.dtos.CustomerEvent asCustomerEvent(
             Customer customer);
 
-    io.zenwave360.example.core.outbound.events.dtos.CustomerEvent asCustomerEvent(Long id);
+    io.zenwave360.example.core.outbound.events.dtos.CustomerDeletedEvent asCustomerEvent(Long id);
 
 }

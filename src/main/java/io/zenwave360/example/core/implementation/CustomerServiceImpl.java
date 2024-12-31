@@ -74,7 +74,7 @@ public class CustomerServiceImpl implements CustomerService {
         customerRepository.deleteById(id);
         // emit events
         var customerEvent = eventsMapper.asCustomerEvent(id);
-        eventsProducer.onCustomerEvent(customerEvent);
+        eventsProducer.onCustomerDeletedEvent(customerEvent);
     }
 
     public Page<Customer> searchCustomers(CustomerSearchCriteria input, Pageable pageable) {

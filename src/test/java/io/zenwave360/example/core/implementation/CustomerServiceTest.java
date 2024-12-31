@@ -1,6 +1,7 @@
 package io.zenwave360.example.core.implementation;
 
 import io.zenwave360.example.config.ServicesInMemoryConfig;
+import io.zenwave360.example.core.domain.Address;
 import io.zenwave360.example.core.domain.Customer;
 import io.zenwave360.example.core.inbound.dtos.CustomerSearchCriteria;
 import io.zenwave360.example.infrastructure.jpa.inmemory.CustomerRepositoryInMemory;
@@ -10,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -32,10 +35,12 @@ class CustomerServiceTest {
     @Test
     void createCustomerTest() {
         var input = new Customer();
-        // TODO fill input data
-        // input.setName("");
-        // input.setEmail("");
-        // input.setAddresses(List.of(new Address()));
+         input.setName("name");
+         input.setEmail("me@email.com");
+         input.setAddresses(List.of(new Address() //
+                 .setStreet("street")
+                 .setCity("city")
+         ));
         var customer = customerService.createCustomer(input);
         assertNotNull(customer.getId());
         assertTrue(customerRepository.containsEntity(customer));
@@ -52,10 +57,12 @@ class CustomerServiceTest {
     void updateCustomerTest() {
         var id = 1L; // TODO fill id
         var input = new Customer();
-        // TODO fill input data
-        // input.setName("");
-        // input.setEmail("");
-        // input.setAddresses(List.of(new Address()));
+        input.setName("name");
+        input.setEmail("me@email.com");
+        input.setAddresses(List.of(new Address() //
+                .setStreet("street")
+                .setCity("city")
+        ));
         assertTrue(customerRepository.containsKey(id));
         var customer = customerService.updateCustomer(id, input);
         assertTrue(customer.isPresent());
