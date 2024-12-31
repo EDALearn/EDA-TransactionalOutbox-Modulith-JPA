@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.3.5</version> <!-- lookup parent from repository -->
+		<version>3.4.0</version> <!-- lookup parent from repository -->
 	</parent>
 
 	<groupId>io.zenwave360.example</groupId>
@@ -13,6 +13,19 @@
 	<name>ZenWave Customer JPA Example</name>
 	<description>ZenWave Customer JPA Example</description>
 
+	<repositories>
+		<repository>
+			<id>confluent</id>
+			<url>https://packages.confluent.io/maven/</url>
+		</repository>
+		<repository>
+			<id>gh</id>
+			<url>https://raw.githubusercontent.com/ZenWave360/maven-snapshots/refs/heads/main</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 
 	<properties>
 		<java.version>21</java.version>
@@ -25,10 +38,11 @@
 		<asyncApiConsumerApiPackage>${basePackage}.adapters.commands</asyncApiConsumerApiPackage>
 
 		<spring-boot.version>${project.parent.version}</spring-boot.version>
-		<spring-cloud.version>2022.0.4</spring-cloud.version>
+		<spring-cloud.version>2024.0.0</spring-cloud.version>
 		<spring-cloud-stream-schema.version>2.2.1.RELEASE</spring-cloud-stream-schema.version>
+		<spring-modulith.version>1.3.0</spring-modulith.version>
 
-		<zenwave.version>1.6.0</zenwave.version>
+		<zenwave.version>1.7.0</zenwave.version>
 
 		<jakarta.validation-api.version>3.1.0</jakarta.validation-api.version>
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
@@ -36,7 +50,7 @@
 		<karate.version>1.4.1</karate.version>
 		<archunit-junit5.version>1.3.0</archunit-junit5.version>
 		<springdoc-openapi-starter-webmvc-ui.version>2.5.0</springdoc-openapi-starter-webmvc-ui.version>
-		<spring-javaformat-maven-plugin.version>0.0.42</spring-javaformat-maven-plugin.version>
+		<spring-javaformat-maven-plugin.version>0.0.43</spring-javaformat-maven-plugin.version>
 		<wiremock.version>3.9.1</wiremock.version>
 	</properties>
 
@@ -46,6 +60,13 @@
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
 				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.modulith</groupId>
+				<artifactId>spring-modulith-bom</artifactId>
+				<version>${spring-modulith.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -94,6 +115,35 @@
 			<artifactId>spring-cloud-stream-schema</artifactId>
 			<version>${spring-cloud-stream-schema.version}</version>
 		</dependency>
+		<!-- avro -->
+<!--		<dependency>-->
+<!--			<groupId>org.apache.avro</groupId>-->
+<!--			<artifactId>avro</artifactId>-->
+<!--			<version>1.11.1</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>com.fasterxml.jackson.dataformat</groupId>-->
+<!--			<artifactId>jackson-dataformat-avro</artifactId>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>io.confluent</groupId>-->
+<!--			<artifactId>kafka-avro-serializer</artifactId>-->
+<!--			<version>5.3.0</version>-->
+<!--		</dependency>-->
+		<!-- spring modulith -->
+		<dependency>
+			<groupId>org.springframework.modulith</groupId>
+			<artifactId>spring-modulith-starter-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.modulith</groupId>
+			<artifactId>spring-modulith-starter-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.zenwave360.sdk</groupId>
+			<artifactId>spring-modulith-events-scs</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 		<!-- utils -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -124,28 +174,11 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
-		<!-- elasticsearch -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-elasticsearch</artifactId>
-		</dependency>
 		<!-- swagger -->
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
 			<version>${springdoc-openapi-starter-webmvc-ui.version}</version>
-		</dependency>
-		<!-- user management -->
-		<dependency>
-			<groupId>com.zenwave.architecture.users</groupId>
-			<artifactId>zenwave-usermanagement-starter</artifactId>
-			<version>${zenwave-usermanagement-starter.version}</version>
-		</dependency>
-		<!-- authserver -->
-		<dependency>
-			<groupId>com.zenwave.architecture.authserver</groupId>
-			<artifactId>zenwave-authserver-starter</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
 		<!-- test -->
@@ -300,7 +333,7 @@
 			<plugin>
 				<groupId>org.openapitools</groupId>
 				<artifactId>openapi-generator-maven-plugin</artifactId>
-				<version>7.8.0</version>
+				<version>7.10.0</version>
 				<executions>
 					<execution>
 						<goals>
@@ -412,6 +445,8 @@
 									<configOptions>
 										<role>provider</role>
 										<style>imperative</style>
+										<transactionalOutbox>modulith</transactionalOutbox>
+										<includeApplicationEventListener>true</includeApplicationEventListener>
 										<modelPackage>${asyncApiModelPackage}</modelPackage>
 										<producerApiPackage>${asyncApiProducerApiPackage}</producerApiPackage>
 										<consumerApiPackage>${asyncApiConsumerApiPackage}</consumerApiPackage>
@@ -432,6 +467,29 @@
 							</dependency>
 						</dependencies>
 					</plugin>
+					<!-- Other plugins -->
+<!--					<plugin>-->
+<!--						<groupId>org.apache.avro</groupId>-->
+<!--						<artifactId>avro-maven-plugin</artifactId>-->
+<!--						<version>1.11.1</version>-->
+<!--						<executions>-->
+<!--							<execution>-->
+<!--								<goals>-->
+<!--									<goal>schema</goal>-->
+<!--								</goals>-->
+<!--								<phase>generate-sources</phase>-->
+<!--							</execution>-->
+<!--						</executions>-->
+<!--						<configuration>-->
+<!--							<sourceDirectory>${project.basedir}/src/main/resources/public/apis/avro</sourceDirectory>-->
+<!--							<outputDirectory>${project.basedir}/target/generated-sources/avro</outputDirectory>-->
+<!--							<imports>-->
+<!--								<import>${project.basedir}/src/main/resources/public/apis/avro/PaymentMethodType.avsc</import>-->
+<!--								<import>${project.basedir}/src/main/resources/public/apis/avro/PaymentMethod.avsc</import>-->
+<!--								<import>${project.basedir}/src/main/resources/public/apis/avro/Address.avsc</import>-->
+<!--							</imports>-->
+<!--						</configuration>-->
+<!--					</plugin>-->
 				</plugins>
 			</build>
 		</profile>

@@ -2,6 +2,10 @@
  * Sample ZenWave Model Definition.
  * Use zenwave-scripts.zdl to generate your code from this model definition.
  */
+config {
+    title "ZenWave Customer JPA Example"
+    basePackage "io.zenwave360.example"
+}
 
 /**
 * Customer entity
@@ -57,7 +61,7 @@ service CustomerService for (Customer) {
 @copy(Customer)
 @asyncapi({ channel: "CustomersChannel", topic: "customers" })
 event CustomerEvent {
-    id Long
+    id Long required
     version Integer
     // all fields from Customer are copied here, but not relationships
     paymentMethods PaymentMethod[]

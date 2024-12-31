@@ -1,6 +1,6 @@
 asyncapi: 3.0.0
 info:
-  title: ""
+  title: "ZenWave Customer JPA Example"
   version: 0.0.1
   tags:
     - name: "Default"
@@ -40,6 +40,11 @@ components:
       headers:
         type: object
         properties:
+          kafka_messageKey:
+            type: "integer"
+            format: "int64"
+            description: This header value will be populated automatically at runtime
+            x-runtime-expression: $message.payload#/id
 
   schemas:
     CustomerEvent:
@@ -48,6 +53,7 @@ components:
       required:
       - "name"
       - "email"
+      - "id"
       properties:
         name:
           type: "string"

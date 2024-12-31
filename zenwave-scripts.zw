@@ -4,10 +4,7 @@ config {
     persistence jpa
     databaseType postgresql
 
-
-    specFile "zenwave-model.zdl"
     zdlFile "zenwave-model.zdl"
-
 
     // these should match the values of openapi-generator-maven-plugin
     // used by the OpenAPIControllersPlugin and SpringWebTestClientPlugin
@@ -29,7 +26,18 @@ config {
             idType integer
             idTypeFormat int64
             targetFile "src/main/resources/public/apis/asyncapi.yml"
-            // includeKafkaCommonHeaders true
+             includeKafkaCommonHeaders true
+        }
+
+        ZDLToAsyncAPIPlugin {
+            asyncapiVersion v3
+            schemaFormat avro
+            avroPackage "io.zenwave360.example.core.outbound.events.dtos"
+            idType long
+//            idType integer
+//            idTypeFormat int64
+            targetFile "src/main/resources/public/apis/asyncapi.yml"
+            includeKafkaCommonHeaders true
         }
 
         BackendApplicationDefaultPlugin {

@@ -7,13 +7,18 @@ logging:
 springdoc.swagger-ui.urls:
   - name: ZenWave Customer JPA Example
     url: /apis/openapi.yml
-  - name: UserManagement
-    url: /apis/user-management-openapi.yml
 
 management:
   endpoints.web.exposure.include: "*"
 
 spring:
+  modulith.events.externalization.enabled: true
+  modulith.events.jdbc.schema-initialization.enabled: true
+  modulith.events.republish-outstanding-events-on-restart: true
+  security:
+    user:
+      name: user
+      password: password
   jpa:
     open-in-view: false
     hibernate.ddl-auto: none
@@ -30,14 +35,12 @@ spring:
         prepStmtCacheSize: 250
         prepStmtCacheSqlLimit: 2048
         useServerPrepStmts: true
-  elasticsearch:
-    uris: ${ELASTICSEARCH_URL}
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
     producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      key-serializer: org.apache.kafka.common.serialization.LongSerializer
     consumer:
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      key-deserializer: org.apache.kafka.common.serialization.LongDeserializer
   cloud:
     stream:
       kafka.binder.enable-observation: true
