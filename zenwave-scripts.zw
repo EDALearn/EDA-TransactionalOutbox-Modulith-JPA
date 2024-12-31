@@ -26,7 +26,7 @@ config {
             idType integer
             idTypeFormat int64
             targetFile "src/main/resources/public/apis/asyncapi.yml"
-             includeKafkaCommonHeaders true
+            includeKafkaCommonHeaders true
         }
 
         ZDLToAsyncAPIPlugin {
