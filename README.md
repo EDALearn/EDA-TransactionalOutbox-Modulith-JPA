@@ -35,15 +35,13 @@ mvn clean test
 * Running Unit and Integration Tests:
 
 ```bash
-mvn clean verify
+mvn clean verif
 ```
 
 * Stop docker dependencies:
 
 ```bash
 docker-compose down
-```
+``
 
-## License
 
-&copy; 2024 ZenWave. All rights reserved.
