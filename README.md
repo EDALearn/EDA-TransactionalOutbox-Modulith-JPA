@@ -1,4 +1,28 @@
-# ZenWave Customer JPA Example
+# Transactional OutBox With AsyncAPI, SpringModulith and ZenWaveSDK
+
+Implementing a Transactional OutBox With AsyncAPI, SpringModulith and ZenWaveSDK.
+
+<picture>
+    <source
+        srcset="https://www.zenwave360.io/posts/TransactionalOutBoxWithAsyncAPIAndSpringModulith/TransactionalOutBoxWithAsyncAPIAndSpringModulith-light.png"
+        media="(prefers-color-scheme: light)">
+    <source
+        srcset="https://www.zenwave360.io/posts/TransactionalOutBoxWithAsyncAPIAndSpringModulith/TransactionalOutBoxWithAsyncAPIAndSpringModulith-dark.png"
+        media="(prefers-color-scheme: dark)">
+    <img
+        src="https://www.zenwave360.io/posts/TransactionalOutBoxWithAsyncAPIAndSpringModulith/TransactionalOutBoxWithAsyncAPIAndSpringModulith-light.png"
+        alt="Transactional OutBox"
+        style="max-width: 100%;">
+</picture>
+
+We’ll explore how we can implement a Transactional Outbox Pattern to:
+
+- Persist data to a supported transactional database (e.g., SQL or MongoDB).
+- Send events to an external message broker like Kafka or RabbitMQ using Spring Cloud Stream.
+- Leverage Spring Modulith Events transactional features.
+- Use ZenWaveSDK Code Generator for AsyncAPI so you don’t need to write a single line of boilerplate code for the transactional outbox and event publishing.
+
+Follow detailed instructions at https://www.zenwave360.io/posts/TransactionalOutBoxWithAsyncAPIAndSpringModulith
 
 ## Requirements
 
@@ -35,13 +59,13 @@ mvn clean test
 * Running Unit and Integration Tests:
 
 ```bash
-mvn clean verif
+mvn clean verify
 ```
 
 * Stop docker dependencies:
 
 ```bash
 docker-compose down
-``
+```
 
 
