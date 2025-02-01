@@ -50,22 +50,37 @@ mvn spring-boot:run -Dspring-boot.run.profiles=local
 * Open [Swagger UI](http://localhost:8080/swagger-ui/index.html) in your browser.
 Use "Basic Authentication" with username `user` and password `password` to authenticate.
 
-* Running Unit Tests:
+* Testing Spring Modulith Events Externalizer for Spring Cloud Stream:
 
 ```bash
-mvn clean test
+curl -X 'POST' \
+  'http://localhost:8080/api/customers' \
+  -H 'accept: application/json' \
+  -H 'Authorization: Basic dXNlcjpwYXNzd29yZA==' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "John Doe",
+  "email": "me@email.com",
+  "addresses": [
+    {
+      "street": "Rue del Percebe 13",
+      "city": "Aqui"
+    }
+  ],
+  "paymentMethods": [
+    {
+      "type": "VISA",
+      "cardNumber": "string"
+    }
+  ]
+}'
 ```
 
-* Running Unit and Integration Tests:
+* Reading Avro messages from Kafka:
 
 ```bash
-mvn clean verify
+docker-compose exec -T schema-registry bash -c "kafka-avro-console-consumer --bootstrap-server kafka:19093 --topic customer.events.avro --from-beginning --property schema.registry.url=http://schema-registry:8081"
 ```
 
-* Stop docker dependencies:
-
-```bash
-docker-compose down
-```
 
 
