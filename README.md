@@ -62,6 +62,38 @@ mvn clean test
 mvn clean verify
 ```
 
+* Testing Spring Modulith Events Externalizer for Spring Cloud Stream:
+
+```bash
+curl -X 'POST' \
+  'http://localhost:8080/api/customers' \
+  -H 'accept: application/json' \
+  -H 'Authorization: Basic dXNlcjpwYXNzd29yZA==' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "John Doe",
+  "email": "me@email.com",
+  "addresses": [
+    {
+      "street": "Rue del Percebe 13",
+      "city": "Aqui"
+    }
+  ],
+  "paymentMethods": [
+    {
+      "type": "VISA",
+      "cardNumber": "string"
+    }
+  ]
+}'
+```
+
+* Reading Avro messages from Kafka:
+
+```bash
+docker-compose exec -T schema-registry bash -c "kafka-avro-console-consumer --bootstrap-server kafka:19093 --topic customer.events.avro --from-beginning --property schema.registry.url=http://schema-registry:8081"
+```
+
 * Stop docker dependencies:
 
 ```bash
