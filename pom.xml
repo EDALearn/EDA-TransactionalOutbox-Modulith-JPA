@@ -42,7 +42,7 @@
 		<lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
 		<karate.version>1.4.1</karate.version>
 		<archunit-junit5.version>1.3.0</archunit-junit5.version>
-		<springdoc-openapi-starter-webmvc-ui.version>2.5.0</springdoc-openapi-starter-webmvc-ui.version>
+		<springdoc-openapi-starter-webmvc-ui.version>2.8.3</springdoc-openapi-starter-webmvc-ui.version>
 		<spring-javaformat-maven-plugin.version>0.0.43</spring-javaformat-maven-plugin.version>
 		<wiremock.version>3.9.1</wiremock.version>
 	</properties>
