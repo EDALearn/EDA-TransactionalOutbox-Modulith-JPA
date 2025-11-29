@@ -44,7 +44,7 @@ docker-compose up -d
 * Run the application:
 
 ```bash
-mvn spring-boot:run -Dspring-boot.run.profiles=local
+mvn spring-boot:run
 ```
 
 * Open [Swagger UI](http://localhost:8080/swagger-ui/index.html) in your browser.

@@ -53,7 +53,7 @@ service CustomerService for (Customer) {
     updateCustomer(id, Customer) Customer? withEvents CustomerEvent
     @delete("/{id}")
     deleteCustomer(id) withEvents CustomerDeletedEvent
-    @post("/search")
+    @post({path: "/search", status: 200})
     @paginated
     searchCustomers(CustomerSearchCriteria) Customer[]
 }

@@ -134,8 +134,12 @@ components:
         id:
           type: "integer"
           format: "int64"
+          readOnly: true
         version:
           type: "integer"
+          default: "null"
+          description: "Version of the document (required in PUT for concurrency control,\
+            \ should be null in POSTs)."
         name:
           type: "string"
           maxLength: 254
@@ -158,7 +162,6 @@ components:
     CustomerPaginated:
       allOf:
       - $ref: "#/components/schemas/Page"
-      - x-business-entity-paginated: "Customer"
       - properties:
           content:
             type: "array"
@@ -205,8 +208,12 @@ components:
         id:
           type: "integer"
           format: "int64"
+          readOnly: true
         version:
           type: "integer"
+          default: "null"
+          description: "Version of the document (required in PUT for concurrency control,\
+            \ should be null in POSTs)."
         type:
           $ref: "#/components/schemas/PaymentMethodType"
         cardNumber:
@@ -257,7 +264,7 @@ components:
     sort:
       name: sort
       in: query
-      description: The number of results page
+      description: Sort results by field name and direction (asc or desc)
       schema:
         type: array
         items:
@@ -271,8 +278,6 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT    # optional, arbitrary value for documentation purposes
-
 security:
   - basicAuth: []  # <-- use the same name here
   - bearerAuth: []  # <-- use the same name here
-

@@ -5,7 +5,7 @@ import io.zenwave360.example.core.implementation.mappers.CustomerServiceMapper;
 import io.zenwave360.example.core.implementation.mappers.EventsMapper;
 import io.zenwave360.example.core.inbound.CustomerService;
 import io.zenwave360.example.core.inbound.dtos.CustomerSearchCriteria;
-import io.zenwave360.example.core.outbound.events.ICustomerEventsProducer;
+import io.zenwave360.example.core.outbound.events.CustomerEventsProducer;
 import io.zenwave360.example.core.outbound.jpa.CustomerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +31,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     private final EventsMapper eventsMapper = EventsMapper.INSTANCE;
 
-    private final ICustomerEventsProducer eventsProducer;
+    private final CustomerEventsProducer eventsProducer;
 
     private final ApplicationEventPublisher applicationEventPublisher;
 
