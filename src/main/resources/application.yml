@@ -50,10 +50,8 @@ spring:
   cloud:
     stream:
       kafka.binder.enable-observation: true
-      function:
-        definition: on-customer-event;
       bindings:
-        on-customer-event-out-0:
+        on-customer-event-out:
           destination: customer.events.avro
           content-type: application/*+avro
           producer:
