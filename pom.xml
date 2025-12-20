@@ -33,7 +33,8 @@
 		<spring-boot.version>${project.parent.version}</spring-boot.version>
 		<spring-cloud.version>2024.0.0</spring-cloud.version>
 		<spring-cloud-stream-schema.version>2.2.1.RELEASE</spring-cloud-stream-schema.version>
-		<spring-modulith.version>1.3.3</spring-modulith.version>
+		<spring-modulith.version>1.4.6</spring-modulith.version>
+		<spring-modulith-events-scs.version>1.0.8</spring-modulith-events-scs.version>
 
 		<zenwave.version>1.7.0</zenwave.version>
 
@@ -135,7 +136,7 @@
 		<dependency>
 			<groupId>io.zenwave360.sdk</groupId>
 			<artifactId>spring-modulith-events-scs</artifactId>
-			<version>1.0.0-RC1</version>
+			<version>${spring-modulith-events-scs.version}</version>
 		</dependency>
 		<!-- utils -->
 		<dependency>
