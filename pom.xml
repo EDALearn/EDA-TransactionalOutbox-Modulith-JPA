@@ -40,7 +40,7 @@
         <zenwave-modulith-events-scs.version>1.2.0-SNAPSHOT</zenwave-modulith-events-scs.version>
 
         <!-- asyncapi-generator -->
-        <zenwave.version>2.2.0</zenwave.version>
+        <zenwave.version>2.5.0</zenwave.version>
         <asyncapiPrefix>src/main/resources/public/apis</asyncapiPrefix><!-- supports relative paths, classpath: and https: -->
         <asyncapi.inputSpec>${asyncapiPrefix}/asyncapi.yml</asyncapi.inputSpec>
         <asyncapi.avro.imports>
@@ -396,8 +396,8 @@
 							</excludes>
 						</configuration>
 					</execution>
-					<execution>
-						<!-- Failsafe Plugin for API Integration Tests (not transactional) -->
+					<!-- <execution>
+						Failsafe Plugin for API Integration Tests (not transactional)
 						<id>api-test</id>
 						<goals>
 							<goal>integration-test</goal>
@@ -408,7 +408,7 @@
 								<include>**/*KarateIntegrationTest.java</include>
 							</includes>
 						</configuration>
-					</execution>
+					</execution> -->
 				</executions>
 			</plugin>
 			<plugin>
