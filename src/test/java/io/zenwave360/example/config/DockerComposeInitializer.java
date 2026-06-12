@@ -6,7 +6,7 @@ import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.testcontainers.DockerClientFactory;
-import org.testcontainers.containers.DockerComposeContainer;
+import org.testcontainers.containers.ComposeContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
 
 import java.io.BufferedReader;
@@ -49,8 +49,7 @@ public class DockerComposeInitializer implements ApplicationContextInitializer<C
     );
 
     static String HOST = DockerClientFactory.instance().dockerHostIpAddress();
-    static DockerComposeContainer container = new DockerComposeContainer(new File(DOCKER_COMPOSE_FILE)).withEnv("HOST",
-            HOST);
+    static ComposeContainer container = new ComposeContainer(new File(DOCKER_COMPOSE_FILE)).withEnv("HOST", HOST);
 
     static {
         for (Service service : SERVICES) {
