@@ -27,7 +27,6 @@ public class PaymentMethod implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
     @Version
