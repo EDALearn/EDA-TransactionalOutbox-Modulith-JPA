@@ -37,7 +37,7 @@
 		<spring-modulith.version>2.1.0</spring-modulith.version>
         <avro.version>1.11.1</avro.version>
 
-        <zenwave-modulith-events-scs.version>1.2.0-SNAPSHOT</zenwave-modulith-events-scs.version>
+        <zenwave-modulith-events-scs.version>1.2.0</zenwave-modulith-events-scs.version>
 
         <!-- asyncapi-generator -->
         <zenwave.version>2.5.0</zenwave.version>
